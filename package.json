@@ -1,10 +1,13 @@
 {
+	"homepage": "Lundoger.github.io/vpn-tg-app",
 	"name": "vpn-tg-app",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
+		"predeploy":"npm run build",
+		"deploy":"gh-pages -d build",
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview"
