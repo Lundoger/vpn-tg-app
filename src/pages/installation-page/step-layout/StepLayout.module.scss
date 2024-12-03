@@ -1,0 +1,25 @@
+@use '../../../styles/variables.scss' as *;
+
+.step {
+  background-color: $dark-grey;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleContainer {
+  background-color: $grey;
+  position: relative;
+}
+
+.title {
+  text-transform: uppercase;
+  font-weight: 900;
+  text-align: center;
+  padding: 15px 30px;
+}
+
+.content {
+  padding: 30px 20px;
+}
