@@ -1,7 +1,8 @@
 import { SwiperSlide, Swiper } from 'swiper/react';
 import { EffectFade, Navigation } from 'swiper/modules';
-import styles from './InstallationPage.module.scss';
+import { steps } from '../../constants/installation';
 import StepLayout from './step-layout/StepLayout';
+import styles from './InstallationPage.module.scss';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 
@@ -18,36 +19,13 @@ const InstallationPage = () => {
             prevEl: '',
           }}
         >
-          {/* этап 1 */}
-          <SwiperSlide className={styles.slide}>
-            <StepLayout title="Этап - 1">
-              <div className=""></div>
-            </StepLayout>
-          </SwiperSlide>
-          {/* этап 2 */}
-          <SwiperSlide className={styles.slide}>
-            <StepLayout title="Этап - 2">
-              <div className=""></div>
-            </StepLayout>
-          </SwiperSlide>
-          {/* этап 3 */}
-          <SwiperSlide className={styles.slide}>
-            <StepLayout title="Этап - 3">
-              <div className=""></div>
-            </StepLayout>
-          </SwiperSlide>
-          {/* этап 4 */}
-          <SwiperSlide className={styles.slide}>
-            <StepLayout title="Этап - 4">
-              <div className=""></div>
-            </StepLayout>
-          </SwiperSlide>
-          {/* этап 5 */}
-          <SwiperSlide className={styles.slide}>
-            <StepLayout title="Этап - 5">
-              <div className=""></div>
-            </StepLayout>
-          </SwiperSlide>
+          {steps.map(({ title, content }) => (
+            <SwiperSlide key={title} className={styles.slide}>
+              <StepLayout title={title}>
+                <div className={styles.stepContent}>{content}</div>
+              </StepLayout>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </section>
