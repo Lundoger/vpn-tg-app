@@ -3,8 +3,7 @@ import { EffectFade, Navigation } from 'swiper/modules';
 import { steps } from '../../constants/installation';
 import StepLayout from './step-layout/StepLayout';
 import styles from './InstallationPage.module.scss';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
+import 'swiper/swiper-bundle.css';
 
 const InstallationPage = () => {
   return (
