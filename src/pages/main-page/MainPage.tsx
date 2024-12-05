@@ -11,10 +11,9 @@ const MainPage = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // при фетче ключа расскоментить
-  // useEffect(() => {
-  //   setKeyV('ss://hD12SN123JNSHBjDHb2V2gn12n323as');
-  // }, []);
+  useEffect(() => {
+    setKeyV('ss://hD12SN123JNSHBjDHb2V2gn12n323as');
+  }, []);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(keyV);
