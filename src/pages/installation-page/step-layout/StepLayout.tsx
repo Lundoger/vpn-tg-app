@@ -6,6 +6,8 @@ import step4Image from '../../../assets/installation/step-4-img.png';
 import step5Image from '../../../assets/installation/step-5-img.png';
 import connectionImage from '../../../assets/installation/connections-img.png';
 import styles from './StepLayout.module.scss';
+import CarouselButton from '../carousel-button/CarouselButton';
+import clsx from 'clsx';
 
 interface StepLayoutProps {
   title: string;
@@ -17,6 +19,12 @@ const StepLayout = ({ title, children }: StepLayoutProps) => {
     <article className={styles.step}>
       <div className={styles.titleContainer}>
         <h3 className={styles.title}>{title}</h3>
+        <CarouselButton
+          className={clsx(styles.buttonLeft, 'installation-prev-el')}
+        />
+        <CarouselButton
+          className={clsx(styles.buttonRight, 'installation-next-el')}
+        />
       </div>
       <div className={styles.content}>{children}</div>
     </article>

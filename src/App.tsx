@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { menuItems } from './constants/menuData';
 import Navigation from './shared/navigation/Navigation';
 import styles from './App.module.scss';
@@ -13,6 +14,7 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const nodeRef = useRef<HTMLDivElement | null>(null);
   const [activeComponent, setActiveComponent] = useState<string>(
     menuItems[0].label,
   );
@@ -28,7 +30,21 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <main className={styles.app}>
-        <div className={styles.viewContainer}>{activePage}</div>
+        <SwitchTransition mode="out-in">
+          <CSSTransition
+            key={activeComponent}
+            nodeRef={nodeRef}
+            timeout={100}
+            classNames={{
+              enterDone: styles.done,
+            }}
+            unmountOnExit
+          >
+            <div ref={nodeRef} className={styles.viewContainer}>
+              {activePage}
+            </div>
+          </CSSTransition>
+        </SwitchTransition>
         <Navigation
           items={menuItems}
           activeItem={activeComponent}

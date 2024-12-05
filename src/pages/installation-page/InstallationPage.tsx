@@ -14,8 +14,8 @@ const InstallationPage = () => {
           modules={[Navigation, EffectFade]}
           spaceBetween={15}
           navigation={{
-            nextEl: '',
-            prevEl: '',
+            nextEl: '.installation-next-el',
+            prevEl: '.installation-prev-el',
           }}
         >
           {steps.map(({ title, content }) => (
