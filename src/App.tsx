@@ -38,7 +38,7 @@ const App = () => {
             classNames={{
               enterDone: styles.done,
             }}
-            unmountOnExit
+            appear
           >
             <div ref={nodeRef} className={styles.viewContainer}>
               {activePage}
