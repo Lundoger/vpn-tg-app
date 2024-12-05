@@ -1,193 +1,178 @@
 @use '../../styles/variables.scss' as *;
 
 .section {
-    max-width: 360px;
-    margin: 53px auto 0;
+  max-width: 360px;
+  margin: 53px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 21.94px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-bottom: 21px;
+  }
+
+  .upd {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 14.63px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-top: 21px;
+    color: $light-grey;
+  }
+
+  .circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-
-    h2 {
-        font-family: Montserrat;
-        font-size: 18px;
-        font-weight: 800;
-        line-height: 21.94px;
-        text-align: center;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
-        margin-bottom: 21px;
-    }
-
-    .upd {
-        font-family: Montserrat;
-        font-size: 12px;
-        font-weight: 300;
-        line-height: 14.63px;
-        text-align: center;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
-        margin-top: 21px;
-        color: $light-grey;
-    }
-
-    .circle {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Montserrat;
-        font-size: 26px;
-        font-weight: 800;
-        line-height: 31.69px;
-        text-align: center;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
-        box-shadow: 0px 0px 7px 0px #B6D8ED4D;
-        border: 4px solid $light-cyan;
-    }
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 31.69px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    box-shadow: 0px 0px 7px 0px #b6d8ed4d;
+    border: 4px solid $light-cyan;
+  }
 }
 
 .keyContainer {
-    align-self: flex-start;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 62px;
+  width: 100%;
+
+  label {
+    font-weight: 500;
+    line-height: 19.5px;
+    text-align: justified;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
+
+  div {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-top: 62px;
-    width: 100%;
+    gap: 2px;
 
-    label {
-        font-family: Montserrat;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 19.5px;
-        text-align: justified;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
+    input {
+      width: 100%;
+      border-radius: 10px 0 0 10px;
+      background-color: $grey;
+      height: 36px;
+      line-height: 36px;
+      font-weight: 300;
+      line-height: 19.5px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: $light-grey;
+      padding: 0 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    div {
-        display: flex;
-        gap: 2px;
+    button {
+      border-radius: 0 10px 10px 0;
+      background-color: $cyan;
+      width: 36px;
+      height: 36px;
+      background-image: url('../../assets/copy-icon.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      flex-shrink: 0;
 
-        input {
-            width: 100%;
-            border-radius: 10px 0 0 10px;
-            background-color: $grey;
-            height: 36px;
-            line-height: 36px;
-            font-family: Montserrat;
-            font-size: 16px;
-            font-weight: 300;
-            line-height: 19.5px;
-            text-align: left;
-            text-underline-position: from-font;
-            text-decoration-skip-ink: none;
-            color: $light-grey;
-            padding: 0 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+      &:hover {
+        background-color: $cyan;
+      }
 
-        button {
-            border-radius: 0 10px 10px 0;
-            background-color: $cyan;
-            width: 36px;
-            height: 36px;
-            background-image: url('../../assets/copy-icon.svg');
-            background-repeat: no-repeat;
-            background-position: center;
-            flex-shrink: 0;
-
-            &:hover {
-                background-color: $cyan;
-            }
-
-            &:active {
-                background-color: $cyan;
-            }
-        }
+      &:active {
+        background-color: $cyan;
+      }
     }
+  }
 
-
-
-    p {
-        align-self: center;
-        font-family: Montserrat;
-        font-size: 12px;
-        font-weight: 300;
-        line-height: 14.63px;
-        text-align: center;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
-        color: $light-grey;
-    }
+  p {
+    align-self: center;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 14.63px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: $light-grey;
+  }
 }
 
 .info {
-    align-self: flex-start;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    margin: 18px 0 35px 0;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 18px 0 35px 0;
 
-    p {
-        font-family: Montserrat;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 19.5px;
-        text-align: justified;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
+  p {
+    font-weight: 500;
+    line-height: 19.5px;
+    text-align: justified;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
 
-        .subscription {
-            margin-left: 5px;
-            padding: 4px 6px;
-            background-color: $secondaryDark;
-            border-radius: 5px;
-            font-family: Montserrat;
-            font-size: 14px;
-            font-weight: 900;
-            line-height: 17.07px;
-            text-underline-position: from-font;
-            text-decoration-skip-ink: none;
-            color: $light-cyan;
-        }
-
-        .date {
-            margin-left: 5px;
-            padding: 4px 6px;
-            background-color: $secondaryDark;
-            border-radius: 5px;
-            font-family: Montserrat;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 19.5px;
-            text-align: justified;
-            text-underline-position: from-font;
-            text-decoration-skip-ink: none;
-        }
+    .subscription {
+      margin-left: 5px;
+      padding: 4px 6px;
+      background-color: $secondaryDark;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 17.07px;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: $light-cyan;
     }
+
+    .date {
+      margin-left: 5px;
+      padding: 4px 6px;
+      background-color: $secondaryDark;
+      border-radius: 5px;
+      font-weight: 500;
+      line-height: 19.5px;
+      text-align: justified;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+    }
+  }
 }
 
 .copied {
-    position: fixed;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 14px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
 
-    &.active {
-        opacity: 1;
-    }
+  &.active {
+    opacity: 1;
+  }
 }

@@ -1,0 +1,21 @@
+@use '../../../styles/variables.scss' as *;
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background-color: $cyan;
+  &:disabled {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  & > img {
+    width: 13px;
+    height: 20px;
+    object-fit: contain;
+  }
+}

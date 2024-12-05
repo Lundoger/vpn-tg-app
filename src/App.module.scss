@@ -9,4 +9,9 @@
 .viewContainer {
   flex: 1 1 100%;
   margin-bottom: 68px;
+  transition: opacity 0.3s ease 0s;
+  opacity: 0;
+  &.done {
+    opacity: 1;
+  }
 }
