@@ -1,11 +1,10 @@
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useCallback, useRef } from 'react';
-
 import Navigation from './shared/navigation/Navigation';
 import { menuItems } from './constants/menuData';
-import styles from './App.module.scss';
 import { useNavigationStore } from './store/store';
+import styles from './App.module.scss';
 
 const queryClient = new QueryClient({
   defaultOptions: {

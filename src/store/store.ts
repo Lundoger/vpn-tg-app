@@ -1,4 +1,4 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { menuItems } from '../constants/menuData';
 
 interface NavigationState {

@@ -1,5 +1,5 @@
 import mainIcon from '../assets/main.svg';
-import tariffsIcon from '../assets/tariffs.png';
+import tariffsIcon from '../assets/tariffs.svg';
 import installationIcon from '../assets/installation.svg';
 import InstallationPage from '../pages/installation-page/InstallationPage';
 import MainPage from '../pages/main-page/MainPage';

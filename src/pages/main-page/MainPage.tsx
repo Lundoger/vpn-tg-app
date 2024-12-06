@@ -18,7 +18,7 @@ const MainPage = () => {
   const [circleInfo, setCircleInfo] = useState<CircleInfo>({
     total: 500,
     left: 377,
-  })
+  });
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -51,18 +51,24 @@ const MainPage = () => {
   const remainingPercentage = (circleInfo.left / circleInfo.total) * 100;
   const angle = 360 - (remainingPercentage / 100) * 360;
 
-
   return (
     <section className={styles.section}>
       <h2>Осталось</h2>
       <div
-        className={clsx(styles.circle, { [styles.empty]: circleInfo.left === 0 })}
+        className={clsx(styles.circle, {
+          [styles.empty]: circleInfo.left === 0,
+        })}
         style={{
           background: `conic-gradient(rgba(69, 69, 69, 0.32) 0deg ${angle}deg, #46cfa1 ${angle}deg)`,
         }}
       >
         <div>{circleInfo.left} GB</div>
-        {circleInfo.left > 0 && <div style={{ transform: `rotate(${angle - 90}deg) translateX(74px)` }} className={styles.marker}></div>}
+        {circleInfo.left > 0 && (
+          <div
+            style={{ transform: `rotate(${angle - 90}deg) translateX(74px)` }}
+            className={styles.marker}
+          ></div>
+        )}
       </div>
       <p className={styles.upd}>Обновляется ежемесячно</p>
 

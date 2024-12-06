@@ -1,13 +1,12 @@
 import React, { memo } from 'react';
-
 import { IMenuItem } from '../../types/types';
+import { useNavigationStore } from '../../store/store';
 import clsx from 'clsx';
 import styles from './Navigation.module.scss';
-import { useNavigationStore } from '../../store/store';
 
 interface NavigationProps {
   items: IMenuItem[];
-  activeItem: string; 
+  activeItem: string;
   onItemSelect: (label: string) => void;
 }
 
