@@ -1,16 +1,21 @@
 import React, { memo } from 'react';
+
 import { IMenuItem } from '../../types/types';
 import clsx from 'clsx';
 import styles from './Navigation.module.scss';
+import { useNavigationStore } from '../../store/store';
 
 interface NavigationProps {
   items: IMenuItem[];
-  activeItem: string;
+  activeItem: string; 
   onItemSelect: (label: string) => void;
 }
 
-const Navigation: React.FC<NavigationProps> = memo(
-  ({ items, activeItem, onItemSelect }) => (
+const Navigation: React.FC<NavigationProps> = memo(({ items }) => {
+  const activeItem = useNavigationStore((state) => state.activeItem);
+  const setActiveItem = useNavigationStore((state) => state.setActiveItem);
+
+  return (
     <nav className={styles.nav}>
       <ul className={styles.list}>
         {items.map(({ label, icon }) => (
@@ -20,7 +25,7 @@ const Navigation: React.FC<NavigationProps> = memo(
               styles.listItem,
               label === activeItem && styles.active,
             )}
-            onClick={() => onItemSelect(label)}
+            onClick={() => setActiveItem(label)}
           >
             <div className={styles.imageContainer}>
               <img src={icon} alt={`${label} icon`} />
@@ -30,7 +35,7 @@ const Navigation: React.FC<NavigationProps> = memo(
         ))}
       </ul>
     </nav>
-  ),
-);
+  );
+});
 
 export default Navigation;

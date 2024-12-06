@@ -19,7 +19,8 @@
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-transition-group": "^4.4.5",
-		"swiper": "^11.1.9"
+		"swiper": "^11.1.9",
+		"zustand": "^5.0.2"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.15.0",

@@ -17,6 +17,7 @@
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     transition: all 0.3s ease;
+    cursor: pointer;
 
     &:hover {
         background-color: $cyan;

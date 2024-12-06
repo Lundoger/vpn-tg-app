@@ -1,0 +1,143 @@
+@use '../../../styles/variables.scss' as *;
+
+.card {
+    max-width: 348px;
+    border-radius: 10px;
+    background-color: $secondaryDark;
+    padding: 40px 20px 30px 20px;
+    margin: 30px auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+
+    h2 {
+        font-family: Montserrat;
+        font-size: 35px;
+        font-weight: 900;
+        line-height: 42.67px;
+        text-align: center;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        text-transform: uppercase;
+        color: $light-cyan;
+        background: linear-gradient(180deg, #46CFA1 0%, #3E755F 100%);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        &>li {
+            position: relative;
+            padding-left: 20px;
+            font-family: Montserrat;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 120%;
+            text-align: justified;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 5px;
+                width: 3px;
+                height: 3px;
+                background-color: #fff;
+                border-radius: 50%;
+                transform: translateY(-50%);
+            }
+        }
+    }
+}
+
+.price {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+
+    .discount {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: $grey;
+        width: 104px;
+        height: 60px;
+        gap: 5px;
+        padding-top: 5px;
+        ;
+        cursor: pointer;
+        transition: all 0.3s ease 0s;
+        position: relative;
+
+        &.active {
+            background-color: $cyan;
+        }
+
+        &:nth-child(1) {
+            border-radius: 10px 0 0 10px;
+        }
+
+        &:nth-child(3) {
+            border-radius: 0 10px 10px 0;
+        }
+
+        h3 {
+            font-family: Montserrat;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 18.29px;
+            text-align: justified;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+        }
+
+        p {
+            font-family: Montserrat;
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 18.29px;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Montserrat;
+            font-size: 8px;
+            font-weight: 800;
+            line-height: 32px;
+            text-align: center;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            background-image: url("../../../assets/tariffStar.svg");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            transform: rotate(-30deg);
+            right: -5px;
+            top: -15px;
+            z-index: 12;
+        }
+
+        &.active {
+            .star {
+                background-image: url("../../../assets/tariffStar-active.svg");
+            }
+        }
+    }
+}

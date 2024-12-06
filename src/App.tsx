@@ -1,30 +1,31 @@
-import { useState, useCallback, useRef } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { menuItems } from './constants/menuData';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useCallback, useRef } from 'react';
+
 import Navigation from './shared/navigation/Navigation';
+import { menuItems } from './constants/menuData';
 import styles from './App.module.scss';
+import { useNavigationStore } from './store/store';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 10, // 10 минут в милисекудах
+      staleTime: 1000 * 60 * 10,
     },
   },
 });
 
 const App = () => {
   const nodeRef = useRef<HTMLDivElement | null>(null);
-  const [activeComponent, setActiveComponent] = useState<string>(
-    menuItems[0].label,
-  );
+  const activeItem = useNavigationStore((state) => state.activeItem);
+  const setActiveItem = useNavigationStore((state) => state.setActiveItem);
 
   const handleItemSelect = useCallback((label: string) => {
-    setActiveComponent(label);
+    setActiveItem(label);
   }, []);
 
   const activePage = menuItems.find(
-    (item) => item.label === activeComponent,
+    (item) => item.label === activeItem,
   )?.component;
 
   return (
@@ -32,7 +33,7 @@ const App = () => {
       <main className={styles.app}>
         <SwitchTransition mode="out-in">
           <CSSTransition
-            key={activeComponent}
+            key={activeItem}
             nodeRef={nodeRef}
             timeout={100}
             classNames={{
@@ -47,7 +48,7 @@ const App = () => {
         </SwitchTransition>
         <Navigation
           items={menuItems}
-          activeItem={activeComponent}
+          activeItem={activeItem}
           onItemSelect={handleItemSelect}
         />
       </main>
