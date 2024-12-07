@@ -122,9 +122,12 @@
   gap: 2px;
   overflow: hidden;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .copyField {
+  text-align: center;
+  flex: 1 1 100%;
   padding: 12px 7px;
   background-color: $grey;
 }
@@ -157,6 +160,7 @@
 }
 
 .copyState {
+  pointer-events: none;
   font-size: 12px;
   font-weight: 300;
   color: $light-grey;

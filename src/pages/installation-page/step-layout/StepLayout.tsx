@@ -67,7 +67,7 @@ const Step2 = () => {
     timeoutRef.current = setTimeout(() => {
       setIsCopied(false);
       timeoutRef.current = null;
-    }, 7000);
+    }, 4000);
   };
 
   return (
@@ -75,23 +75,19 @@ const Step2 = () => {
       <ul style={{ marginBottom: 35 }} className={styles.list}>
         <li className={styles.listItem}>Скопируйте ключ</li>
       </ul>
-      <div className={styles.line}>
+      <div onClick={handleCopy} className={styles.line}>
         <div className={styles.copyField}>
           <span className={styles.key}>
-            ss://hD12SN123JNSHBjDHb2V2gn12n323as
+            {isCopied
+              ? 'Ключ cкопирован!'
+              : 'ss://hD12SN123JNSHBjDHb2V2gn12n323as'}
           </span>
         </div>
-        <button
-          onClick={handleCopy}
-          className={styles.copyButton}
-          type="button"
-        >
+        <button className={styles.copyButton} type="button">
           <img src={copyIcon} alt="copy" />
         </button>
       </div>
-      <p className={styles.copyState}>
-        {isCopied ? 'Скопировано!' : 'Нажмите, чтобы скопировать'}
-      </p>
+      <p className={styles.copyState}>Нажмите, чтобы скопировать</p>
     </>
   );
 };
