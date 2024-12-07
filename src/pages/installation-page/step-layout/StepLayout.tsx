@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { installationLinks } from '../../../constants/installation';
+
+import CarouselButton from '../carousel-button/CarouselButton';
+import clsx from 'clsx';
+import connectionImage from '../../../assets/installation/connections-img.png';
 import copyIcon from '../../../assets/copy-icon.svg';
+import { installationLinks } from '../../../constants/installation';
 import step3Image from '../../../assets/installation/step-3-img.png';
 import step4Image from '../../../assets/installation/step-4-img.png';
 import step5Image from '../../../assets/installation/step-5-img.png';
-import connectionImage from '../../../assets/installation/connections-img.png';
 import styles from './StepLayout.module.scss';
-import CarouselButton from '../carousel-button/CarouselButton';
-import clsx from 'clsx';
 
 interface StepLayoutProps {
   title: string;
@@ -77,7 +78,8 @@ const Step2 = () => {
       </ul>
       <div onClick={handleCopy} className={styles.line}>
         <div className={styles.copyField}>
-          <span className={styles.key}>
+          <span className={styles.key}
+          style={{ paddingLeft: isCopied ? '40px' : '0' }}>
             {isCopied
               ? 'Ключ cкопирован!'
               : 'ss://hD12SN123JNSHBjDHb2V2gn12n323as'}

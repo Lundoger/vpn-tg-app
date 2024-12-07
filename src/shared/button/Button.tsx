@@ -9,7 +9,7 @@ interface ButtonProps {
 
 const Button = ({ text, className, onClick }: ButtonProps) => {
   return (
-    <button onClick={onClick} className={clsx(styles.button, className)}>
+    <button type="button" onClick={onClick} className={clsx(styles.button, className)}>
       {text}
     </button>
   );

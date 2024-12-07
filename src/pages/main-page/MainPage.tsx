@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import Button from '../../shared/button/Button';
 import clsx from 'clsx';
+import copyIcon from '../../assets/copy-icon.svg';
 import styles from './MainPage.module.scss';
 import { useNavigationStore } from '../../store/store';
 
@@ -17,10 +18,14 @@ const MainPage = () => {
   );
   const [circleInfo, setCircleInfo] = useState<CircleInfo>({
     total: 500,
-    left: 377,
+    left: 0,
   });
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [animatedAngle, setAnimatedAngle] = useState(0);
+
+  const targetAngle = 360 - (circleInfo.left / circleInfo.total) * 360;
 
   useEffect(() => {
     setKeyV('ss://hD12SN123JNSHBjDHb2V2gn12n323as');
@@ -30,9 +35,32 @@ const MainPage = () => {
     });
   }, []);
 
+  useEffect(() => {
+    let startAngle = 0;
+    let endAngle = targetAngle;
+    let startTime: number | null = null;
+    const duration = 1000;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const currentAngle = startAngle + (endAngle - startAngle) * progress;
+      setAnimatedAngle(currentAngle);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+
+    return () => { };
+  }, [targetAngle]);
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(keyV);
     setIsCopied(true);
+    navigator.clipboard.writeText(keyV);
 
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -41,15 +69,12 @@ const MainPage = () => {
     timeoutRef.current = setTimeout(() => {
       setIsCopied(false);
       timeoutRef.current = null;
-    }, 700);
+    }, 4000);
   };
 
   const handleClick = () => {
     setActiveItem('Тарифы');
   };
-
-  const remainingPercentage = (circleInfo.left / circleInfo.total) * 100;
-  const angle = 360 - (remainingPercentage / 100) * 360;
 
   return (
     <section className={styles.section}>
@@ -59,33 +84,35 @@ const MainPage = () => {
           [styles.empty]: circleInfo.left === 0,
         })}
         style={{
-          background: `conic-gradient(rgba(69, 69, 69, 0.32) 0deg ${angle}deg, #46cfa1 ${angle}deg)`,
+          background: `conic-gradient(rgba(69, 69, 69, 0.32) 0deg ${animatedAngle}deg, #46cfa1 ${animatedAngle}deg)`,
         }}
       >
         <div>{circleInfo.left} GB</div>
         {circleInfo.left > 0 && (
           <div
-            style={{ transform: `rotate(${angle - 90}deg) translateX(74px)` }}
+            style={{ transform: `rotate(${animatedAngle - 90}deg) translateX(74px)` }}
             className={styles.marker}
           ></div>
         )}
       </div>
       <p className={styles.upd}>Обновляется ежемесячно</p>
 
-      <div className={styles.keyContainer}>
-        <label htmlFor="key">Ваш ключ для Outline</label>
-        <div>
-          <input
-            onClick={handleCopy}
-            name="key"
-            readOnly
-            type="text"
-            value={keyV}
-          ></input>
-          <button onClick={handleCopy}></button>
+
+      <label htmlFor="key">Ваш ключ для Outline</label>
+        <div onClick={handleCopy} className={styles.line}>
+          <div className={styles.copyField}>
+            <span className={styles.key} 
+            style={{ paddingLeft: isCopied ? '40px' : '0' }}>
+              {isCopied
+                ? 'Ключ cкопирован!'
+                : keyV}
+            </span>
+          </div>
+          <button className={styles.copyButton} type="button">
+            <img src={copyIcon} alt="copy" />
+          </button>
         </div>
-        <p onClick={handleCopy}>Нажмите, чтобы скопировать</p>
-      </div>
+        <p className={styles.copyState}>Нажмите, чтобы скопировать</p>
 
       <div className={styles.info}>
         <p>
@@ -100,10 +127,6 @@ const MainPage = () => {
       </div>
 
       <Button onClick={handleClick} text="Продлить"></Button>
-
-      <div className={clsx(styles.copied, isCopied && styles.active)}>
-        Ключ скопирован!
-      </div>
     </section>
   );
 };
