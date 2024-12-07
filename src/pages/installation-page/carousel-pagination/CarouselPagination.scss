@@ -1,0 +1,25 @@
+@use '../../../styles/variables.scss' as *;
+
+.sliderPagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  & > span {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: $grey;
+    transition: all 0.3s ease 0s;
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: $light-grey;
+      }
+    }
+    &.swiper-pagination-bullet-active {
+      background-color: $cyan;
+    }
+  }
+}

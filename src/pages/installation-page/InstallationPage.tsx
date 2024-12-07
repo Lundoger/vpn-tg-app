@@ -1,9 +1,10 @@
 import { SwiperSlide, Swiper } from 'swiper/react';
-import { EffectFade, Navigation } from 'swiper/modules';
+import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { steps } from '../../constants/installation';
 import StepLayout from './step-layout/StepLayout';
 import styles from './InstallationPage.module.scss';
 import 'swiper/swiper-bundle.css';
+import CarouselPagination from './carousel-pagination/CarouselPagination';
 
 const InstallationPage = () => {
   return (
@@ -11,11 +12,16 @@ const InstallationPage = () => {
       <div className="container">
         <h1 className={styles.title}>Установка</h1>
         <Swiper
-          modules={[Navigation, EffectFade]}
+          className={styles.slider}
+          modules={[Navigation, EffectFade, Pagination]}
           spaceBetween={15}
           navigation={{
             nextEl: '.installation-next-el',
             prevEl: '.installation-prev-el',
+          }}
+          pagination={{
+            el: '.installation-pagination-el',
+            clickable: true,
           }}
         >
           {steps.map(({ title, content }) => (
@@ -26,6 +32,8 @@ const InstallationPage = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        <CarouselPagination className="installation-pagination-el" />
       </div>
     </section>
   );
