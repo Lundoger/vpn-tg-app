@@ -48,28 +48,58 @@ const App = () => {
     (item) => item.label === activeItem,
   )?.component;
 
+  function parseTelegramInitData(initData: string) {
+    // Создаём объект для работы с query-параметрами
+    const params = new URLSearchParams(initData);
+  
+    // Например, вытаскиваем поле "user", в котором Telegram хранит данные пользователя
+    const userParam = params.get('user');
+    
+    let user = null;
+    if (userParam) {
+      // userParam - это закодированная строка JSON, поэтому сначала декодируем
+      const decodedUser = decodeURIComponent(userParam); 
+      // Теперь decodedUser должен выглядеть как {"id":538326553,"first_name":"..."}
+      user = JSON.parse(decodedUser);
+    }
+  
+    // Аналогично можно извлечь другие параметры:
+    const chatInstance = params.get('chat_instance');
+    const chatType = params.get('chat_type');
+    const authDate = params.get('auth_date');
+    const signature = params.get('signature');
+    const hashValue = params.get('hash');
+  
+    // Собираем в объект для удобства
+    return {
+      user,
+      chatInstance,
+      chatType,
+      authDate,
+      signature,
+      hash: hashValue
+    };
+  }
+  
+  // Пример использования в вашем коде
+  const initDataStr = window.Telegram?.WebApp?.initData || '';
+  const authHeader = parseTelegramInitData(initDataStr);
+  
+  console.log('authHeader:', authHeader);
+  
+
   const startAuth = async () => {
     try {
-      console.log('window.Telegram', window.Telegram);
-      console.log('window.Telegram.WebApp', window.Telegram.WebApp);
-      console.log('window.Telegram.WebApp.initData', window.Telegram.WebApp.initData);
-      // const authHeader = window.Telegram?.WebApp?.Utils?.urlParseQueryString
-      //   ? window.Telegram.WebApp.Utils.urlParseQueryString(window.Telegram.WebApp.initData)
-      //   : {};
-
-      const authHeader: Record<string, string> = window.Telegram.WebApp.initData ? 
-        { initData: JSON.parse(window.Telegram.WebApp.initData) } : 
-        {};
-
-      console.log('authHeader', authHeader);
-
-      const dataKeys = Object.keys(authHeader).sort();
-      const items = dataKeys.map((key) => `${key}=${authHeader[key]}`);
-      const dataCheckString = items.join('&');
+      const parsedData = parseTelegramInitData(window.Telegram.WebApp.initData);
+      
+      // Преобразуем объект в строку запроса напрямую
+      const dataCheckString = Object.entries(parsedData)
+        .filter(([_, value]) => value !== null)
+        .map(([key, value]) => `${key}=${typeof value === 'object' ? JSON.stringify(value) : value}`)
+        .join('&');
 
       console.log('dataCheckString', dataCheckString);
-
-      // Отправляем dataCheckString на сервер для получения токена
+      
       const token = await postAuth(dataCheckString);
 
       console.log('token', token);
