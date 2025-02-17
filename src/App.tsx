@@ -53,9 +53,13 @@ const App = () => {
       console.log('window.Telegram', window.Telegram);
       console.log('window.Telegram.WebApp', window.Telegram.WebApp);
       console.log('window.Telegram.WebApp.initData', window.Telegram.WebApp.initData);
-      const authHeader = window.Telegram?.WebApp?.Utils?.urlParseQueryString
-        ? window.Telegram.WebApp.Utils.urlParseQueryString(window.Telegram.WebApp.initData)
-        : {};
+      // const authHeader = window.Telegram?.WebApp?.Utils?.urlParseQueryString
+      //   ? window.Telegram.WebApp.Utils.urlParseQueryString(window.Telegram.WebApp.initData)
+      //   : {};
+
+      const authHeader: Record<string, string> = window.Telegram.WebApp.initData ? 
+        { initData: window.Telegram.WebApp.initData } : 
+        {};
 
       console.log('authHeader', authHeader);
 
