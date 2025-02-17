@@ -58,7 +58,7 @@ const App = () => {
       //   : {};
 
       const authHeader: Record<string, string> = window.Telegram.WebApp.initData ? 
-        { initData: window.Telegram.WebApp.initData } : 
+        { initData: JSON.parse(window.Telegram.WebApp.initData) } : 
         {};
 
       console.log('authHeader', authHeader);
