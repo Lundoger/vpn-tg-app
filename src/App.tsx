@@ -54,12 +54,18 @@ const App = () => {
         ? window.Telegram.WebApp.Utils.urlParseQueryString(window.Telegram.WebApp.initData)
         : {};
 
+      console.log('authHeader', authHeader);
+
       const dataKeys = Object.keys(authHeader).sort();
       const items = dataKeys.map((key) => `${key}=${authHeader[key]}`);
       const dataCheckString = items.join('&');
 
+      console.log('dataCheckString', dataCheckString);
+
       // Отправляем dataCheckString на сервер для получения токена
       const token = await postAuth(dataCheckString);
+
+      console.log('token', token);
 
       // Сохраняем полученный токен в cookies на 1 день
       document.cookie = `auth_token=${token.token}; max-age=86400; path=/`;
@@ -71,6 +77,7 @@ const App = () => {
   useEffect(() => {
     // Проверяем наличие токена авторизации
     const authToken = Cookies.get('auth_token');
+    console.log('authToken', authToken);
     if (!authToken) {
       startAuth();
     }
