@@ -7,22 +7,21 @@ interface ApiResponse {
   // Добавьте другие общие поля ответа при необходимости
 }
 
-// Создаем инстанс axios
-// const api: AxiosInstance = axios.create({
-//   baseURL: import.meta.env.VITE_BASE_URL,
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   withCredentials: true,
-// });
-
 const api: AxiosInstance = axios.create({
-    baseURL: 'https://lattyvpn.ru:8443',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
-  });
+  baseURL: import.meta.env.VITE_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
+
+// const api: AxiosInstance = axios.create({
+//     baseURL: 'https://lattyvpn.ru:8443',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     withCredentials: true,
+//   });
 
 // Функция для получения токена из cookies
 const getAuthToken = (): string | null => {

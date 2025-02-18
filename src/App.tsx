@@ -54,38 +54,44 @@ const App = () => {
     try {
       console.log('startAuth', window.Telegram?.WebApp?.initDataUnsafe);
       const parsedData = window.Telegram?.WebApp?.initDataUnsafe;
-
       const safeJSONStringify = (obj: any) =>
         JSON.stringify(obj).replace(/\//g, '\\/');
-
-      // Получаем ключи, отфильтровываем null-значения, сортируем их и формируем строку запроса
       const dataCheckString = Object.keys(parsedData)
         .sort()
         .map((key) => {
           const value = parsedData[key];
-          // Если значение — объект, сериализуем с заменой символов "/"
           return `${key}=${typeof value === 'object' ? safeJSONStringify(value) : value}`;
         })
         .join('&');
 
       console.log('dataCheckString', dataCheckString);
-
       const token = await postAuth(dataCheckString);
-      console.log('token', token);
-
-      // Сохраняем полученный токен в cookies на 1 день
       document.cookie = `auth_token=${token.token}; max-age=86400; path=/`;
     } catch (error) {
       console.error('Telegram authentication failed:', error);
     }
   };
 
+  const devAuth = async () => {
+    const testDataCheckString =
+      'auth_date=1736960774&chat_instance=8610356838351439092&chat_type=private&hash=f11aaab0a3b3deb9f3140fdd216c46086947d4426081f27da0c85f5dbc142e51&signature=9cgzhZs_ncdtZTBRXylP7OXnNl5PveVFlAdYzExgMWYil9Vh38gZeekt5Khcvcjwtzvd1hH--WTF--7unJrtDg&user={"id":1,"first_name":"eralinkd","last_name":"","username":"sb_newest","language_code":"ru","allows_write_to_pm":true,"photo_url":"https:\/\/t.me\/i\/userpic\/320\/t8iGW7XVQ3k-EvpOOkPQ0IawHU5MwdAHEG5QJrYx3Gs.svg"}'
+    const token = await postAuth(testDataCheckString);
+    document.cookie = `auth_token=${token.token}; max-age=86400; path=/`;
+  };
+
   useEffect(() => {
-    // Проверяем наличие токена авторизации
     const authToken = Cookies.get('auth_token');
     console.log('authToken', authToken);
     if (!authToken) {
-      startAuth();
+      const env = import.meta.env.VITE_ENV;
+      if (env === 'dev') {
+        console.log('dev mode');
+        devAuth();
+      } else if (env === 'stage') {
+        startAuth();
+      } else {
+        console.log('undefined env');
+      }
     }
   }, []);
 
