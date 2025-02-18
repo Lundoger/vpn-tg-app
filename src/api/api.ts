@@ -18,14 +18,6 @@ interface UserResponse {
   planExpireDate: string;
 }
 
-interface PlanInfoResponse {
-  name: string;
-  limit: number;
-  prices: {
-    [key: string]: number;
-  };
-}
-
 export const postAuth = async (data: string): Promise<AuthResponse> => {
   const response = await api.post<AuthResponse>('/telegram/login', { initData: data });
   console.log('response', response);
