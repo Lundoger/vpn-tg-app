@@ -14,6 +14,6 @@ export default defineConfig({
   base: '/vpn-tg-app/',
   plugins: [react()],
   build: {
-    outDir: 'build',
+    outDir: 'dist',
   },
 });
