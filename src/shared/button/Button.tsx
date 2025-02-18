@@ -5,11 +5,16 @@ interface ButtonProps {
   text: string;
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const Button = ({ text, className, onClick }: ButtonProps) => {
+const Button = ({ text, className, onClick, disabled }: ButtonProps) => {
   return (
-    <button type="button" onClick={onClick} className={clsx(styles.button, className)}>
+    <button 
+      className={clsx(styles.button, className)} 
+      onClick={onClick}
+      disabled={disabled}
+    >
       {text}
     </button>
   );
