@@ -34,7 +34,7 @@ const Loader = () => {
             }}
           />
         </div>
-        <p className={styles.text}>Загружаемся...</p>
+        <p className={styles.text}>Загрузка...</p>
       </div>
     </div>
   );
