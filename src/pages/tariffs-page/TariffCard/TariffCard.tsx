@@ -1,5 +1,4 @@
 import Button from '../../../shared/button/Button';
-import { TariffsCardProps } from '../../../types/types'
 import clsx from 'clsx';
 import styles from './TariffCard.module.scss'
 import { useState } from 'react';
@@ -19,7 +18,7 @@ interface TariffCardProps {
 const TariffCard = ({ info, description }: TariffCardProps) => {
   const [activeDiscount, setActiveDiscount] = useState(1);
   
-  const periods = {
+  const periods: Record<string, string> = {
     "1": "1 месяц",
     "6": "6 месяцев",
     "12": "12 месяцев"
@@ -32,10 +31,9 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
 
   const handlePurchase = async () => {
     try {
-      const { stars } = await postInvoiceCreate({ stars: info.prices[activeDiscount] });
+      const { stars } = await postInvoiceCreate({ stars: info.prices[activeDiscount.toString()] });
       window.Telegram.WebApp.openInvoice(stars, (status) => {
         if (status === "paid") {
-          // Можно добавить обновление данных после успешной оплаты
           window.location.reload();
         }
       });
@@ -65,7 +63,7 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
               activeDiscount === Number(period) && styles.active
             )}
           >
-            <h3>{periods[period]}</h3>
+            <h3>{periods[period] || ''}</h3>
             <p>⭐{price}</p>
           </div>
         ))}
@@ -82,4 +80,4 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
   );
 };
 
-export default TariffCard
+export default TariffCard;

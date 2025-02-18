@@ -16,24 +16,6 @@ const queryClient = new QueryClient({
   },
 });
 
-interface TelegramWebApp {
-  initData: string;
-  initDataUnsafe: any;
-  Utils: {
-    urlParseQueryString: (data: string) => Record<string, string>;
-  };
-}
-
-interface Telegram {
-  WebApp: TelegramWebApp;
-}
-
-declare global {
-  interface Window {
-    Telegram: Telegram;
-  }
-}
-
 const App = () => {
   const nodeRef = useRef<HTMLDivElement | null>(null);
   const activeItem = useNavigationStore((state) => state.activeItem);

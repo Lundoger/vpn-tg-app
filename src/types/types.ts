@@ -20,3 +20,19 @@ export interface Tariff {
     [key: string]: number;
   };
 }
+
+export interface TelegramWebApp {
+  initData: string;
+  initDataUnsafe: any;
+  openInvoice: (invoiceUrl: string, callback: (status: 'paid' | 'cancelled' | 'failed' | 'pending') => void) => void;
+}
+
+export interface Telegram {
+  WebApp: TelegramWebApp;
+}
+
+declare global {
+  interface Window {
+    Telegram: Telegram;
+  }
+}
