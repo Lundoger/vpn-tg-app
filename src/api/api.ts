@@ -6,7 +6,7 @@ interface AuthResponse {
 }
 
 interface InvoiceResponse {
-  stars: string;
+  link: string;
 }
 
 interface UserResponse {

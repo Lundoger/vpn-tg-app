@@ -17,6 +17,7 @@ interface TariffCardProps {
 
 const TariffCard = ({ info, description }: TariffCardProps) => {
   const [activeDiscount, setActiveDiscount] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   
   const periods: Record<string, string> = {
     "1": "1 месяц",
@@ -30,15 +31,20 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
   ];
 
   const handlePurchase = async () => {
+    if (isLoading) return;
+    
     try {
-      const { stars } = await postInvoiceCreate({ stars: info.prices[activeDiscount.toString()] });
-      window.Telegram.WebApp.openInvoice(stars, (status) => {
+      setIsLoading(true);
+      const { link } = await postInvoiceCreate({ stars: info.prices[activeDiscount.toString()] });
+      window.Telegram.WebApp.openInvoice(link, (status) => {
         if (status === "paid") {
           window.location.reload();
         }
+        setIsLoading(false);
       });
     } catch (error) {
       console.error('Payment error:', error);
+      setIsLoading(false);
     }
   };
 
@@ -71,9 +77,10 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
 
       {Object.keys(info.prices).length > 0 && (
         <Button
-          text="Приобрести"
+          text={isLoading ? "Загрузка..." : "Приобрести"}
           className={styles.button}
           onClick={handlePurchase}
+          disabled={isLoading}
         />
       )}
     </div>
