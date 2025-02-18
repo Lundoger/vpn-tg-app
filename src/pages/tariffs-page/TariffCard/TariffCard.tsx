@@ -36,14 +36,6 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
     `${info.limit} GB трафика ежемесячно`
   ];
 
-  const getPriceWithDiscount = (period: string, price: number) => {
-    if (info.name.toUpperCase() === 'ПРЕМИУМ' && discounts[period]) {
-      const discount = discounts[period];
-      return Math.floor(price * (1 - discount / 100));
-    }
-    return price;
-  };
-
   const handlePurchase = async () => {
     if (isLoading) return;
     
