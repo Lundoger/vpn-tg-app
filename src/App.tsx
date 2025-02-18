@@ -84,14 +84,14 @@ const App = () => {
   // Пример использования в вашем коде
   const initDataStr = window.Telegram?.WebApp?.initDataUnsafe || '';
   console.log('initDataStr', initDataStr);
-  const authHeader = parseTelegramInitData(initDataStr);
+  // const authHeader = parseTelegramInitData(initDataStr);
   
-  console.log('authHeader:', authHeader);
+  // console.log('authHeader:', authHeader);
   
 
   const startAuth = async () => {
     try {
-      const parsedData = parseTelegramInitData(window.Telegram.WebApp.initDataUnsafe);
+      const parsedData = window.Telegram?.WebApp?.initDataUnsafe;
       
       // Преобразуем объект в строку запроса напрямую
       const dataCheckString = Object.entries(parsedData)
