@@ -83,6 +83,7 @@ const App = () => {
   
   // Пример использования в вашем коде
   const initDataStr = window.Telegram?.WebApp?.initDataUnsafe || '';
+  console.log('initDataStr', initDataStr);
   const authHeader = parseTelegramInitData(initDataStr);
   
   console.log('authHeader:', authHeader);
