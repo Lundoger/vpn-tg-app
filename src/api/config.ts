@@ -25,13 +25,14 @@ const api: AxiosInstance = axios.create({
 
 // Функция для получения токена из cookies
 const getAuthToken = (): string | null => {
-  return Cookies.get('authToken') || null;
+  return Cookies.get('auth_token') || null;
 };
 
 // Перехватчик запросов
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = getAuthToken();
+    console.log('token', token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

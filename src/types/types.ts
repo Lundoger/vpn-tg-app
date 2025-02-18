@@ -12,3 +12,11 @@ export interface TariffsCardProps {
       description: string[]
   };
 }
+
+export interface Tariff {
+  name: string;
+  limit: number;
+  prices: {
+    [key: string]: number;
+  };
+}

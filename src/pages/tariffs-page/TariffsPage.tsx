@@ -2,70 +2,38 @@ import { useEffect, useState } from "react";
 
 import TariffCard from "./TariffCard/TariffCard";
 import styles from "./TariffsPage.module.scss";
-
-interface Tariff {
-  type: string;
-  price: number[];
-  discount: number[];
-  description: string[];
-}
+import { getPlanInfo } from "../../api/api";
+import { Tariff } from '../../types/types';
 
 const TariffsPage = () => {
   const [data, setData] = useState<Tariff[]>([]);
 
+  const description = [
+    'YouTube в 4к и без рекламы!',
+    'VPN который можно не выключать',
+    'Нет ограничений по кол-ву устройств',
+    'Скорость быстрее чем без VPN',
+    'Установка за 30 секунд',
+    'Мгновенное подключение️',
+    'Доступные цены',
+  ];
+
   useEffect(() => {
-    setData([
-      {
-        type: "премиум",
-        price: [55, 199, 449],
-        discount: [0, 15, 25],
-        description: [
-          'YouTube в 4к и без рекламы!',
-          'VPN который можно не выключать',
-          'Нет ограничений по кол-ву устройств',
-          'Скорость быстрее чем без VPN',
-          'Установка за 30 секунд',
-          'Мгновенное подключение️',
-          '500 GB трафика ежемесячно',
-          'Доступные цены',
-        ]
-      },
-      {
-        type: "премиум",
-        price: [55, 199, 449],
-        discount: [0, 15, 25],
-        description: [
-          'YouTube в 4к и без рекламы!',
-          'VPN который можно не выключать',
-          'Нет ограничений по кол-ву устройств',
-          'Скорость быстрее чем без VPN',
-          'Установка за 30 секунд',
-          'Мгновенное подключение️',
-          '500 GB трафика ежемесячно',
-          'Доступные цены',
-        ]
-      },
-      {
-        type: "премиум",
-        price: [55, 199, 449],
-        discount: [0, 15, 25],
-        description: [
-          'YouTube в 4к и без рекламы!',
-          'VPN который можно не выключать',
-          'Нет ограничений по кол-ву устройств',
-          'Скорость быстрее чем без VPN',
-          'Установка за 30 секунд',
-          'Мгновенное подключение️',
-          '500 GB трафика ежемесячно',
-          'Доступные цены',
-        ]
-      },
-    ]);
+    const fetchPlanInfo = async () => {
+      const planInfo = await getPlanInfo();
+      setData(planInfo);
+    };
+    fetchPlanInfo();
   }, []);
+
   return (
     <div className={styles.tariffPage}>
       {data.map((item, index) => (
-        <TariffCard key={index} info={item} />
+        <TariffCard 
+          key={index} 
+          info={item} 
+          description={description}
+        />
       ))}
     </div>
   );
