@@ -1,12 +1,24 @@
 import { create } from 'zustand';
-import { menuItems } from '../constants/menuData';
+import { UserResponse } from '../types/types';
 
-interface NavigationState {
+interface NavigationStore {
   activeItem: string;
   setActiveItem: (item: string) => void;
 }
 
-export const useNavigationStore = create<NavigationState>((set) => ({
-  activeItem: menuItems[0].label,
+interface UserStore {
+  user: UserResponse | null;
+  setUser: (user: UserResponse) => void;
+}
+
+interface Store extends NavigationStore, UserStore {}
+
+export const useStore = create<Store>((set) => ({
+  activeItem: 'Главная',
   setActiveItem: (item) => set({ activeItem: item }),
+  user: null,
+  setUser: (user) => set({ user }),
 }));
+
+// Для обратной совместимости
+export const useNavigationStore = useStore;

@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
-
+import React, { useRef, useState } from 'react';
 import CarouselButton from '../carousel-button/CarouselButton';
 import clsx from 'clsx';
 import connectionImage from '../../../assets/installation/connections-img.png';
@@ -9,7 +8,7 @@ import step3Image from '../../../assets/installation/step-3-img.png';
 import step4Image from '../../../assets/installation/step-4-img.png';
 import step5Image from '../../../assets/installation/step-5-img.png';
 import styles from './StepLayout.module.scss';
-import { getUserMe } from '../../../api/api';
+import { useStore } from '../../../store/store';
 
 interface StepLayoutProps {
   title: string;
@@ -56,20 +55,14 @@ StepLayout.Step1 = Step1;
 
 const Step2 = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
-  const [keyV, setKeyV] = useState<string>('******************************');
+  const user = useStore((state) => state.user);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUserMe();
-      setKeyV(userData.token);
-    };
-    fetchUser();
-  }, []);
-
   const handleCopy = () => {
+    if (!user?.token) return;
+    
     setIsCopied(true);
-    navigator.clipboard.writeText(keyV);
+    navigator.clipboard.writeText(user.token);
 
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -92,7 +85,7 @@ const Step2 = () => {
           style={{ paddingLeft: isCopied ? '40px' : '0' }}>
             {isCopied
               ? 'Ключ cкопирован!'
-              : keyV}
+              : user?.token || '******************************'}
           </span>
         </div>
         <button className={styles.copyButton} type="button">

@@ -1,0 +1,42 @@
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.switch {
+  width: 100px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 5px;
+  position: relative;
+}
+
+.toggle {
+  width: 30px;
+  height: 30px;
+  background: #46cfa1;
+  border-radius: 50%;
+  transform: translateX(0);
+  transition: all 0.05s ease-out;
+}
+
+.text {
+  color: #fff;
+  font-size: 18px;
+  margin: 0;
+} 

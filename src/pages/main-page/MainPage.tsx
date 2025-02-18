@@ -4,27 +4,17 @@ import Button from '../../shared/button/Button';
 import clsx from 'clsx';
 import copyIcon from '../../assets/copy-icon.svg';
 import styles from './MainPage.module.scss';
-import { useNavigationStore } from '../../store/store';
-import { getUserMe } from '../../api/api';
+import { useStore } from '../../store/store';
 
 interface CircleInfo {
   total: number;
   left: number;
 }
 
-interface UserResponse {
-  id: number;
-  token: string;
-  vpnPlan: string;
-  gbLeft: number;
-  gbTotal: number;
-  planExpireDate: string;
-}
 const MainPage = () => {
-  const setActiveItem = useNavigationStore((state) => state.setActiveItem);
-  const [keyV, setKeyV] = useState<string>(
-    '******************************',
-  );
+  const setActiveItem = useStore((state) => state.setActiveItem);
+  const user = useStore((state) => state.user);
+  const [keyV, setKeyV] = useState<string>('******************************');
   const [circleInfo, setCircleInfo] = useState<CircleInfo>({
     total: 0,
     left: 0,
@@ -33,28 +23,22 @@ const MainPage = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [animatedAngle, setAnimatedAngle] = useState(0);
-  const [user, setUser] = useState<UserResponse | null>(null);
   const [plan, setPlan] = useState<string | null>(null);
   const [planExpireDate, setPlanExpireDate] = useState<string | null>(null);
 
   const targetAngle = 360 - (circleInfo.left / circleInfo.total) * 360;
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUserMe();
-      console.log('userData', userData);
-      setUser(userData);
-      setKeyV(userData.token);
+    if (user) {
+      setKeyV(user.token);
       setCircleInfo({
-        total: userData.gbTotal,
-        left: userData.gbLeft,
+        total: user.gbTotal,
+        left: user.gbLeft,
       });
-      setPlan(userData.vpnPlan);
-      setPlanExpireDate(userData.planExpireDate);
-    };
-    fetchUser();
-    console.log('user', user);
-  }, []);
+      setPlan(user.vpnPlan);
+      setPlanExpireDate(user.planExpireDate);
+    }
+  }, [user]);
 
   useEffect(() => {
     let startAngle = 0;

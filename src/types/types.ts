@@ -36,3 +36,12 @@ declare global {
     Telegram: Telegram;
   }
 }
+
+export interface UserResponse {
+  id: number;
+  token: string;
+  vpnPlan: string;
+  gbLeft: number;
+  gbTotal: number;
+  planExpireDate: string;
+}

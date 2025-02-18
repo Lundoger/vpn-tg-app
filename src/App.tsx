@@ -3,10 +3,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useCallback, useRef, useEffect, useState } from 'react';
 import Navigation from './shared/navigation/Navigation';
 import { menuItems } from './constants/menuData';
-import { useNavigationStore } from './store/store';
+import { useStore } from './store/store';
 import styles from './App.module.scss';
 import Cookies from 'js-cookie';
-import { postAuth } from './api/api';
+import { postAuth, getUserMe } from './api/api';
+import Loader from './components/Loader/Loader';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,9 +19,11 @@ const queryClient = new QueryClient({
 
 const App = () => {
   const nodeRef = useRef<HTMLDivElement | null>(null);
-  const activeItem = useNavigationStore((state) => state.activeItem);
-  const setActiveItem = useNavigationStore((state) => state.setActiveItem);
+  const activeItem = useStore((state) => state.activeItem);
+  const setActiveItem = useStore((state) => state.setActiveItem);
+  const setUser = useStore((state) => state.setUser);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleItemSelect = useCallback(
     (label: string) => {
@@ -64,23 +67,45 @@ const App = () => {
     setToken(token.token);
   };
 
-  useEffect(() => {
-    const authToken = Cookies.get('auth_token');
-    if (!authToken) {
-      const env = import.meta.env.VITE_ENV;
-      if (env === 'dev') {
-        console.log('dev mode');
-        devAuth();
-      } else if (env === 'stage') {
-        startAuth();
+  const initApp = async () => {
+    try {
+      const authToken = Cookies.get('auth_token');
+      if (!authToken) {
+        const env = import.meta.env.VITE_ENV;
+        if (env === 'dev') {
+          await devAuth();
+        } else if (env === 'stage') {
+          await startAuth();
+        }
       } else {
-        console.log('undefined env');
+        setToken(authToken);
       }
+
+      // Получаем данные пользователя
+      if (Cookies.get('auth_token')) {
+        const userData = await getUserMe();
+        setUser(userData);
+      }
+
+      // Устанавливаем начальную страницу
+      setActiveItem('Профиль');
+
+      // Минимальное время загрузки - 3 секунды
+      await new Promise(resolve => setTimeout(resolve, 2500));
+    } catch (error) {
+      console.error('Init error:', error);
+    } finally {
+      setIsLoading(false);
     }
-    else {
-      setToken(authToken);
-    }
+  };
+
+  useEffect(() => {
+    initApp();
   }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
