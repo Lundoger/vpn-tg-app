@@ -99,7 +99,7 @@ const MainPage = () => {
 
   return (
     <section className={styles.section}>
-      <h2>Осталось</h2>
+      <h2>Осталось трафика</h2>
       <div
         className={clsx(styles.circle, {
           [styles.empty]: circleInfo.left === 0,

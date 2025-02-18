@@ -84,7 +84,7 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
             )}
           >
             <h3>{periods[period] || ''}</h3>
-            <p className={styles.starContainer}><img src={star} alt="star" />{getPriceWithDiscount(period, price)}</p>
+            <p className={styles.starContainer}><img src={star} alt="star" />{price}</p>
             {info.name.toUpperCase() === 'ПРЕМИУМ' && discounts[period] > 0 && (
               <div className={styles.star}>-{discounts[period]}%</div>
             )}
