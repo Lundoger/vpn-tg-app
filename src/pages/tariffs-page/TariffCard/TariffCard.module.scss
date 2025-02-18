@@ -63,6 +63,15 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
 
+    .starContainer {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        img {
+            margin-top: -2px;
+        }
+    }
+
     .discount {
         display: flex;
         justify-content: center;

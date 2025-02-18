@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import styles from './TariffCard.module.scss'
 import { useState } from 'react';
 import { postInvoiceCreate } from '../../../api/api';
-
+import star from '../../../assets/star.svg';
 interface TariffCardProps {
   info: {
     name: string;
@@ -25,10 +25,24 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
     "12": "12 месяцев"
   };
 
+  const discounts: Record<string, number> = {
+    "1": 0,
+    "6": 15,
+    "12": 25
+  };
+
   const fullDescription = [
     ...description,
     `${info.limit} GB трафика ежемесячно`
   ];
+
+  const getPriceWithDiscount = (period: string, price: number) => {
+    if (info.name.toUpperCase() === 'ПРЕМИУМ' && discounts[period]) {
+      const discount = discounts[period];
+      return Math.floor(price * (1 - discount / 100));
+    }
+    return price;
+  };
 
   const handlePurchase = async () => {
     if (isLoading) return;
@@ -70,7 +84,10 @@ const TariffCard = ({ info, description }: TariffCardProps) => {
             )}
           >
             <h3>{periods[period] || ''}</h3>
-            <p>⭐{price}</p>
+            <p className={styles.starContainer}><img src={star} alt="star" />{getPriceWithDiscount(period, price)}</p>
+            {info.name.toUpperCase() === 'ПРЕМИУМ' && discounts[period] > 0 && (
+              <div className={styles.star}>-{discounts[period]}%</div>
+            )}
           </div>
         ))}
       </div>
