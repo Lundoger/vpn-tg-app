@@ -48,38 +48,38 @@ const App = () => {
     (item) => item.label === activeItem,
   )?.component;
 
-  function parseTelegramInitData(initData: string) {
-    // Создаём объект для работы с query-параметрами
-    const params = new URLSearchParams(initData);
+  // function parseTelegramInitData(initData: string) {
+  //   // Создаём объект для работы с query-параметрами
+  //   const params = new URLSearchParams(initData);
   
-    // Например, вытаскиваем поле "user", в котором Telegram хранит данные пользователя
-    const userParam = params.get('user');
+  //   // Например, вытаскиваем поле "user", в котором Telegram хранит данные пользователя
+  //   const userParam = params.get('user');
     
-    let user = null;
-    if (userParam) {
-      // userParam - это закодированная строка JSON, поэтому сначала декодируем
-      const decodedUser = decodeURIComponent(userParam); 
-      // Теперь decodedUser должен выглядеть как {"id":538326553,"first_name":"..."}
-      user = JSON.parse(decodedUser);
-    }
+  //   let user = null;
+  //   if (userParam) {
+  //     // userParam - это закодированная строка JSON, поэтому сначала декодируем
+  //     const decodedUser = decodeURIComponent(userParam); 
+  //     // Теперь decodedUser должен выглядеть как {"id":538326553,"first_name":"..."}
+  //     user = JSON.parse(decodedUser);
+  //   }
   
-    // Аналогично можно извлечь другие параметры:
-    const chatInstance = params.get('chat_instance');
-    const chatType = params.get('chat_type');
-    const authDate = params.get('auth_date');
-    const signature = params.get('signature');
-    const hashValue = params.get('hash');
+  //   // Аналогично можно извлечь другие параметры:
+  //   const chatInstance = params.get('chat_instance');
+  //   const chatType = params.get('chat_type');
+  //   const authDate = params.get('auth_date');
+  //   const signature = params.get('signature');
+  //   const hashValue = params.get('hash');
   
-    // Собираем в объект для удобства
-    return {
-      user,
-      chatInstance,
-      chatType,
-      authDate,
-      signature,
-      hash: hashValue
-    };
-  }
+  //   // Собираем в объект для удобства
+  //   return {
+  //     user,
+  //     chatInstance,
+  //     chatType,
+  //     authDate,
+  //     signature,
+  //     hash: hashValue
+  //   };
+  // }
   
   // Пример использования в вашем коде
   // const initDataStr = window.Telegram?.WebApp?.initDataUnsafe || '';
