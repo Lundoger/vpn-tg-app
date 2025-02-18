@@ -34,15 +34,17 @@ declare global {
   }
 }
 
-
 const App = () => {
   const nodeRef = useRef<HTMLDivElement | null>(null);
   const activeItem = useNavigationStore((state) => state.activeItem);
   const setActiveItem = useNavigationStore((state) => state.setActiveItem);
 
-  const handleItemSelect = useCallback((label: string) => {
-    setActiveItem(label);
-  }, [setActiveItem]);
+  const handleItemSelect = useCallback(
+    (label: string) => {
+      setActiveItem(label);
+    },
+    [setActiveItem],
+  );
 
   const activePage = menuItems.find(
     (item) => item.label === activeItem,
@@ -52,29 +54,31 @@ const App = () => {
     try {
       console.log('startAuth', window.Telegram?.WebApp?.initDataUnsafe);
       const parsedData = window.Telegram?.WebApp?.initDataUnsafe;
-      
+
+      const safeJSONStringify = (obj: any) =>
+        JSON.stringify(obj).replace(/\//g, '\\/');
+
       // Получаем ключи, отфильтровываем null-значения, сортируем их и формируем строку запроса
       const dataCheckString = Object.keys(parsedData)
         .sort()
         .map((key) => {
           const value = parsedData[key];
-          // Если значение — объект, преобразуем его в JSON-строку
-          return `${key}=${typeof value === 'object' ? JSON.stringify(value) : value}`;
+          // Если значение — объект, сериализуем с заменой символов "/"
+          return `${key}=${typeof value === 'object' ? safeJSONStringify(value) : value}`;
         })
         .join('&');
-  
+
       console.log('dataCheckString', dataCheckString);
-      
+
       const token = await postAuth(dataCheckString);
       console.log('token', token);
-  
+
       // Сохраняем полученный токен в cookies на 1 день
       document.cookie = `auth_token=${token.token}; max-age=86400; path=/`;
     } catch (error) {
       console.error('Telegram authentication failed:', error);
     }
   };
-  
 
   useEffect(() => {
     // Проверяем наличие токена авторизации
