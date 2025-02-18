@@ -69,6 +69,9 @@ const App = () => {
 
   const initApp = async () => {
     try {
+      // Запускаем таймер минимального времени загрузки
+      const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2500));
+
       const authToken = Cookies.get('auth_token');
       if (!authToken) {
         const env = import.meta.env.VITE_ENV;
@@ -90,8 +93,8 @@ const App = () => {
       // Устанавливаем начальную страницу
       setActiveItem('Профиль');
 
-      // Минимальное время загрузки - 3 секунды
-      await new Promise(resolve => setTimeout(resolve, 2500));
+      // Ждем завершения и минимального времени, и загрузки данных
+      await minLoadingTime;
     } catch (error) {
       console.error('Init error:', error);
     } finally {
