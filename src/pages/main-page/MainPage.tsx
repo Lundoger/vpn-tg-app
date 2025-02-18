@@ -34,6 +34,8 @@ const MainPage = () => {
 
   const [animatedAngle, setAnimatedAngle] = useState(0);
   const [user, setUser] = useState<UserResponse | null>(null);
+  const [plan, setPlan] = useState<string | null>(null);
+  const [planExpireDate, setPlanExpireDate] = useState<string | null>(null);
 
   const targetAngle = 360 - (circleInfo.left / circleInfo.total) * 360;
 
@@ -47,6 +49,8 @@ const MainPage = () => {
         total: userData.gbTotal,
         left: userData.gbLeft,
       });
+      setPlan(userData.vpnPlan);
+      setPlanExpireDate(userData.planExpireDate);
     };
     fetchUser();
     console.log('user', user);
@@ -134,12 +138,12 @@ const MainPage = () => {
       <div className={styles.info}>
         <p>
           Подписка:{' '}
-          <span className={clsx(styles.subscription, styles.premium)}>
-            <span>Премиум</span>
+          <span className={clsx(styles.subscription, plan && styles.premium)}>
+            <span>{plan || 'отсутсвует'}</span>
           </span>
         </p>
         <p>
-          Действует до: <span className={styles.date}>27/12/2025</span>
+          Действует до: <span className={styles.date}>{planExpireDate || 'бессрочно'}</span>
         </p>
       </div>
 

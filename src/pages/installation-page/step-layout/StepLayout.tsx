@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import CarouselButton from '../carousel-button/CarouselButton';
 import clsx from 'clsx';
@@ -9,6 +9,7 @@ import step3Image from '../../../assets/installation/step-3-img.png';
 import step4Image from '../../../assets/installation/step-4-img.png';
 import step5Image from '../../../assets/installation/step-5-img.png';
 import styles from './StepLayout.module.scss';
+import { getUserMe } from '../../../api/api';
 
 interface StepLayoutProps {
   title: string;
@@ -55,11 +56,20 @@ StepLayout.Step1 = Step1;
 
 const Step2 = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [keyV, setKeyV] = useState<string>('******************************');
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUserMe();
+      setKeyV(userData.token);
+    };
+    fetchUser();
+  }, []);
 
   const handleCopy = () => {
     setIsCopied(true);
-    navigator.clipboard.writeText('ss://hD12SN123JNSHBjDHb2V2gn12n323as');
+    navigator.clipboard.writeText(keyV);
 
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -82,7 +92,7 @@ const Step2 = () => {
           style={{ paddingLeft: isCopied ? '40px' : '0' }}>
             {isCopied
               ? 'Ключ cкопирован!'
-              : 'ss://hD12SN123JNSHBjDHb2V2gn12n323as'}
+              : keyV}
           </span>
         </div>
         <button className={styles.copyButton} type="button">
@@ -101,7 +111,7 @@ const Step3 = () => {
     <>
       <ul style={{ marginBottom: 20 }} className={styles.list}>
         <li className={styles.listItem}>Откройте приложение Outline</li>
-        <li className={styles.listItem}>Нажмите “ + ” в правом верхнем углу</li>
+        <li className={styles.listItem}>Нажмите " + " в правом верхнем углу</li>
       </ul>
       <div className={styles.imgContainer}>
         <img src={step3Image} alt="step-3 image" />
@@ -133,7 +143,7 @@ const Step5 = () => {
   return (
     <>
       <ul style={{ marginBottom: 20 }} className={styles.list}>
-        <li className={styles.listItem}>Нажмите кнопку “Добавить сервер”</li>
+        <li className={styles.listItem}>Нажмите кнопку "Добавить сервер"</li>
       </ul>
       <div className={styles.imgContainer}>
         <img src={step5Image} alt="step-5 image" />
@@ -149,7 +159,7 @@ const Connection = () => {
     <>
       <p style={{ marginBottom: 20 }} className={styles.desc}>
         Для включения или отключения впн достаточно нажать лишь одну кнопку
-        “Подключить” или “Отключить”
+        "Подключить" или "Отключить"
       </p>
       <div className={styles.imgContainer}>
         <img src={connectionImage} alt="connection image" />
