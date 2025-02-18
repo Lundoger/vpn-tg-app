@@ -11,8 +11,9 @@ import react from '@vitejs/plugin-react';
 // })
 
 export default defineConfig({
-  base: '/vpn-tg-app/',
+  base: '/',
   plugins: [react()],
+
   build: {
     outDir: 'dist',
   },
