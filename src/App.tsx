@@ -48,70 +48,33 @@ const App = () => {
     (item) => item.label === activeItem,
   )?.component;
 
-  // function parseTelegramInitData(initData: string) {
-  //   // Создаём объект для работы с query-параметрами
-  //   const params = new URLSearchParams(initData);
-  
-  //   // Например, вытаскиваем поле "user", в котором Telegram хранит данные пользователя
-  //   const userParam = params.get('user');
-    
-  //   let user = null;
-  //   if (userParam) {
-  //     // userParam - это закодированная строка JSON, поэтому сначала декодируем
-  //     const decodedUser = decodeURIComponent(userParam); 
-  //     // Теперь decodedUser должен выглядеть как {"id":538326553,"first_name":"..."}
-  //     user = JSON.parse(decodedUser);
-  //   }
-  
-  //   // Аналогично можно извлечь другие параметры:
-  //   const chatInstance = params.get('chat_instance');
-  //   const chatType = params.get('chat_type');
-  //   const authDate = params.get('auth_date');
-  //   const signature = params.get('signature');
-  //   const hashValue = params.get('hash');
-  
-  //   // Собираем в объект для удобства
-  //   return {
-  //     user,
-  //     chatInstance,
-  //     chatType,
-  //     authDate,
-  //     signature,
-  //     hash: hashValue
-  //   };
-  // }
-  
-  // Пример использования в вашем коде
-  // const initDataStr = window.Telegram?.WebApp?.initDataUnsafe || '';
-  // console.log('initDataStr', initDataStr);
-  // const authHeader = parseTelegramInitData(initDataStr);
-  
-  // console.log('authHeader:', authHeader);
-  
-
   const startAuth = async () => {
     try {
       console.log('startAuth', window.Telegram?.WebApp?.initDataUnsafe);
       const parsedData = window.Telegram?.WebApp?.initDataUnsafe;
       
-      // Преобразуем объект в строку запроса напрямую
-      const dataCheckString = Object.entries(parsedData)
-        .filter(([_, value]) => value !== null)
-        .map(([key, value]) => `${key}=${typeof value === 'object' ? JSON.stringify(value) : value}`)
+      // Получаем ключи, отфильтровываем null-значения, сортируем их и формируем строку запроса
+      const dataCheckString = Object.keys(parsedData)
+        .sort()
+        .map((key) => {
+          const value = parsedData[key];
+          // Если значение — объект, преобразуем его в JSON-строку
+          return `${key}=${typeof value === 'object' ? JSON.stringify(value) : value}`;
+        })
         .join('&');
-
+  
       console.log('dataCheckString', dataCheckString);
       
       const token = await postAuth(dataCheckString);
-
       console.log('token', token);
-
+  
       // Сохраняем полученный токен в cookies на 1 день
       document.cookie = `auth_token=${token.token}; max-age=86400; path=/`;
     } catch (error) {
       console.error('Telegram authentication failed:', error);
     }
   };
+  
 
   useEffect(() => {
     // Проверяем наличие токена авторизации
