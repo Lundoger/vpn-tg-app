@@ -1,7 +1,6 @@
 import playMarket from '../assets/installation/play-market.svg';
 import appStore from '../assets/installation/app-store.svg';
 import windows from '../assets/installation/windows.svg';
-import apk from '../assets/installation/apk.svg';
 import StepLayout from '../pages/installation-page/step-layout/StepLayout';
 
 interface IInstallationLink {
