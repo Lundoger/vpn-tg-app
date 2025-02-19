@@ -40,8 +40,8 @@ const Step1 = () => {
       </ul>
       <p className={styles.label}>Ссылки на установку</p>
       <div className={styles.actions}>
-        {installationLinks.map(({ label, icon }) => (
-          <a key={label} href="#" className={styles.installationLink}>
+        {installationLinks.map(({ label, icon, link }) => (
+          <a key={label} href={link} className={styles.installationLink}>
             <img src={icon} alt={`${label} icon`} />
             <span>{label}</span>
           </a>

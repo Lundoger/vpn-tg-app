@@ -7,13 +7,13 @@ import StepLayout from '../pages/installation-page/step-layout/StepLayout';
 interface IInstallationLink {
   label: string;
   icon: string;
+  link: string;
 }
 
 export const installationLinks: IInstallationLink[] = [
-  { label: 'Play Market', icon: playMarket },
-  { label: 'App Store', icon: appStore },
-  { label: 'Windows', icon: windows },
-  { label: 'APK', icon: apk },
+  { label: 'Play Market', icon: playMarket, link: 'https://play.google.com/store/apps/details?id=org.outline.android.client' },
+  { label: 'App Store', icon: appStore, link: 'https://apps.apple.com/us/app/outline-app/id1356177741' },
+  { label: 'Windows', icon: windows, link: 'https://s3.amazonaws.com/outline-releases/client/windows/stable/Outline-Client.exe' },
 ];
 
 export const steps = [
