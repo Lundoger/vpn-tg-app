@@ -6,7 +6,7 @@ import { menuItems } from './constants/menuData';
 import { useStore } from './store/store';
 import styles from './App.module.scss';
 import Cookies from 'js-cookie';
-import { postAuth, getUserMe } from './api/api';
+import { postAuth, getUserMe, getPlanInfo } from './api/api';
 import Loader from './components/Loader/Loader';
 
 const queryClient = new QueryClient({
@@ -22,6 +22,7 @@ const App = () => {
   const activeItem = useStore((state) => state.activeItem);
   const setActiveItem = useStore((state) => state.setActiveItem);
   const setUser = useStore((state) => state.setUser);
+  const setTariffs = useStore((state) => state.setTariffs);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -69,7 +70,6 @@ const App = () => {
 
   const initApp = async () => {
     try {
-      // Запускаем таймер минимального времени загрузки
       const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2500));
 
       const authToken = Cookies.get('auth_token');
@@ -84,16 +84,17 @@ const App = () => {
         setToken(authToken);
       }
 
-      // Получаем данные пользователя
+      // Получаем данные пользователя и тарифов параллельно
       if (Cookies.get('auth_token')) {
-        const userData = await getUserMe();
+        const [userData, tariffsData] = await Promise.all([
+          getUserMe(),
+          getPlanInfo()
+        ]);
         setUser(userData);
+        setTariffs(tariffsData);
       }
 
-      // Устанавливаем начальную страницу
       setActiveItem('Профиль');
-
-      // Ждем завершения и минимального времени, и загрузки данных
       await minLoadingTime;
     } catch (error) {
       console.error('Init error:', error);

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { UserResponse } from '../types/types';
+import { UserResponse, Tariff } from '../types/types';
 
 interface NavigationStore {
   activeItem: string;
@@ -11,13 +11,20 @@ interface UserStore {
   setUser: (user: UserResponse) => void;
 }
 
-interface Store extends NavigationStore, UserStore {}
+interface TariffsStore {
+  tariffs: Tariff[];
+  setTariffs: (tariffs: Tariff[]) => void;
+}
+
+interface Store extends NavigationStore, UserStore, TariffsStore {}
 
 export const useStore = create<Store>((set) => ({
   activeItem: 'Главная',
   setActiveItem: (item) => set({ activeItem: item }),
   user: null,
   setUser: (user) => set({ user }),
+  tariffs: [],
+  setTariffs: (tariffs) => set({ tariffs }),
 }));
 
 // Для обратной совместимости

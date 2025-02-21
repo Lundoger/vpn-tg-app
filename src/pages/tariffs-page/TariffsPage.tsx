@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
-
+import { useStore } from "../../store/store";
 import TariffCard from "./TariffCard/TariffCard";
 import styles from "./TariffsPage.module.scss";
-import { getPlanInfo } from "../../api/api";
-import { Tariff } from '../../types/types';
 
 const TariffsPage = () => {
-  const [data, setData] = useState<Tariff[]>([]);
+  const tariffs = useStore((state) => state.tariffs);
 
   const description = [
     'YouTube в 4к и без рекламы!',
@@ -17,17 +14,9 @@ const TariffsPage = () => {
     'Мгновенное подключение️',
   ];
 
-  useEffect(() => {
-    const fetchPlanInfo = async () => {
-      const planInfo = await getPlanInfo();
-      setData(planInfo);
-    };
-    fetchPlanInfo();
-  }, []);
-
   return (
     <div className={styles.tariffPage}>
-      {data.map((item, index) => (
+      {tariffs.map((item, index) => (
         <TariffCard 
           key={index} 
           info={item} 
