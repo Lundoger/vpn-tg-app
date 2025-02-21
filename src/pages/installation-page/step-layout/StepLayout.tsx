@@ -33,6 +33,11 @@ const StepLayout = ({ title, children }: StepLayoutProps) => {
 };
 
 const Step1 = () => {
+  const handleLinkClick = (link: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.Telegram.WebApp.openLink(link);
+  };
+
   return (
     <>
       <ul style={{ marginBottom: 50 }} className={styles.list}>
@@ -41,7 +46,12 @@ const Step1 = () => {
       <p className={styles.label}>Ссылки на установку</p>
       <div className={styles.actions}>
         {installationLinks.map(({ label, icon, link }) => (
-          <a key={label} href={link} className={styles.installationLink}>
+          <a 
+            key={label} 
+            href={link} 
+            className={styles.installationLink}
+            onClick={handleLinkClick(link)}
+          >
             <img src={icon} alt={`${label} icon`} />
             <span>{label}</span>
           </a>

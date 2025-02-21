@@ -25,6 +25,7 @@ export interface TelegramWebApp {
   initData: string;
   initDataUnsafe: any;
   openInvoice: (invoiceUrl: string, callback: (status: 'paid' | 'cancelled' | 'failed' | 'pending') => void) => void;
+  openLink: (url: string) => void;
 }
 
 export interface Telegram {
