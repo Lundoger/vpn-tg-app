@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import copyIcon from '../../assets/copy-icon.svg';
 import styles from './MainPage.module.scss';
 import { useStore } from '../../store/store';
+import { getUserMe } from '../../api/api';
 
 interface CircleInfo {
   total: number;
@@ -13,6 +14,7 @@ interface CircleInfo {
 
 const MainPage = () => {
   const setActiveItem = useStore((state) => state.setActiveItem);
+  const setUser = useStore((state) => state.setUser);
   const user = useStore((state) => state.user);
   const [keyV, setKeyV] = useState<string>('******************************');
   const [circleInfo, setCircleInfo] = useState<CircleInfo>({
@@ -39,6 +41,19 @@ const MainPage = () => {
       setPlanExpireDate(user.planExpireDate);
     }
   }, [user]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUserMe();
+        setUser(userData);
+      } catch (error) {
+        console.error('Ошибка при получении данных пользователя:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     let startAngle = 0;
